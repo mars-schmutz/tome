@@ -59,7 +59,7 @@ func (c *Character) SetInspiration(insp int) {
 
 func (c *Character) SetLevel(level int) {
 	c.Base.Level = level
-	c.setProficiency()
+	c.recalculateProficiency()
 }
 
 func (c *Character) SetScores(scores CharScores) {
@@ -67,7 +67,7 @@ func (c *Character) SetScores(scores CharScores) {
 	c.recalculateAllSkills()
 }
 
-func (c *Character) setProficiency() {
+func (c *Character) recalculateProficiency() {
 	if c.Base.Level <= 4 {
 		c.Proficiency = 2
 	} else if c.Base.Level <= 8 {
