@@ -43,7 +43,7 @@ func TestRecalculateAllSkills(t *testing.T) {
 			c := Character{Scores: tt.scores, Proficiency: tt.proficiency}
 			findSkill(t, &c.Skills, tt.skill).Level = tt.level
 
-			c.RecalculateAllSkills()
+			c.recalculateAllSkills()
 
 			if got := findSkill(t, &c.Skills, tt.skill).Bonus; got != tt.want {
 				t.Errorf("%s Bonus = %d, want %d", tt.skill, got, tt.want)
