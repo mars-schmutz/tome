@@ -18,3 +18,7 @@ func NewCharacterApi(newSvc *character.CharacterService) *CharacterApi {
 func (api *CharacterApi) SetName(name string) models.Character {
 	return api.svc.SetName(name)
 }
+
+func (api *CharacterApi) GetCharacter() models.Character {
+	return api.svc.GetCharacter()
+}
