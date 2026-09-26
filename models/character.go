@@ -23,7 +23,7 @@ type Character struct {
 }
 
 func NewCharacter() Character {
-	return Character{
+	char := Character{
 		Base:        CharBase{},
 		Scores:      CharScores{},
 		Health:      CharHealth{},
@@ -31,6 +31,8 @@ func NewCharacter() Character {
 		Inspiration: 0,
 		Proficiency: 0,
 	}
+	char.SetLevel(1)
+	return char
 }
 
 func (cb *CharBase) SetName(name string) {
