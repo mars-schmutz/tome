@@ -18,14 +18,6 @@ func NewCharacterService() *CharacterService {
 	}
 }
 
-func (s *CharacterService) SetName(name string) models.Character {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-
-	s.current.Base.SetName(name)
-	return s.current
-}
-
 func (s *CharacterService) GetCharacter() models.Character {
 	s.mu.Lock()
 	defer s.mu.Unlock()
