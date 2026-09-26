@@ -1,6 +1,8 @@
 package character
 
 import (
+	"fmt"
+
 	"tome/models"
 )
 
@@ -66,4 +68,15 @@ func (s *CharacterService) SetScores(scores models.CharScores) models.Character 
 
 	s.current.SetScores(scores)
 	return s.current
+}
+
+func (s *CharacterService) SetSkillLevel(skill string, level int) (models.Character, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if err := s.current.SetSkillLevel(skill, level); err != nil {
+		return models.Character{}, fmt.Errorf("set skill level: %w", err)
+	}
+
+	return s.current, nil
 }
