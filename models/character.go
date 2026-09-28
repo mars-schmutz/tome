@@ -13,13 +13,14 @@ type CharBase struct {
 }
 
 type Character struct {
-	ID          int64
-	Base        CharBase
-	Scores      CharScores
-	Health      CharHealth
-	Skills      CharSkills
-	Inspiration int
-	Proficiency int
+	ID             int64
+	Base           CharBase
+	Scores         CharScores
+	ScoreModifiers CharModifiers
+	Health         CharHealth
+	Skills         CharSkills
+	Inspiration    int
+	Proficiency    int
 }
 
 func NewCharacter() Character {
@@ -61,12 +62,12 @@ func (c *Character) SetInspiration(insp int) {
 
 func (c *Character) SetLevel(level int) {
 	c.Base.Level = level
-	c.recalculateProficiency()
+	c.recalculate()
 }
 
 func (c *Character) SetScores(scores CharScores) {
 	c.Scores = scores
-	c.recalculateAllSkills()
+	c.recalculate()
 }
 
 func (c *Character) recalculateProficiency() {
@@ -81,6 +82,11 @@ func (c *Character) recalculateProficiency() {
 	} else {
 		c.Proficiency = 6
 	}
+}
+
+func (c *Character) recalculate() {
+	c.recalculateProficiency()
+	c.recalculateModifiers()
 	c.recalculateAllSkills()
 }
 
@@ -92,6 +98,15 @@ func (c *Character) recalculateAllSkills() {
 	}
 }
 
+func (c *Character) recalculateModifiers() {
+	c.ScoreModifiers.Str = c.Scores.AbilityModifier(Str)
+	c.ScoreModifiers.Dex = c.Scores.AbilityModifier(Dex)
+	c.ScoreModifiers.Con = c.Scores.AbilityModifier(Con)
+	c.ScoreModifiers.Int = c.Scores.AbilityModifier(Int)
+	c.ScoreModifiers.Wis = c.Scores.AbilityModifier(Wis)
+	c.ScoreModifiers.Cha = c.Scores.AbilityModifier(Cha)
+}
+
 func (c *Character) SetSkillLevel(skill string, level int) error {
 	if level > 2 || level < 0 {
 		return fmt.Errorf("invalid level value %d", level)
@@ -100,7 +115,7 @@ func (c *Character) SetSkillLevel(skill string, level int) error {
 	for _, e := range c.Skills.entries() {
 		if e.Name == skill {
 			e.Skill.Level = level
-			c.recalculateAllSkills()
+			c.recalculate()
 			return nil
 		}
 	}

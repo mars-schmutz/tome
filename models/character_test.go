@@ -85,7 +85,7 @@ func TestSetLevel(t *testing.T) {
 			if c.Proficiency != tt.wantProf {
 				t.Errorf("Proficiency = %d, want %d", c.Proficiency, tt.wantProf)
 			}
-			// Make sure recalculate ran when changing level (SetLevel -> setProficiency -> recalculateAllSkills)
+			// Make sure recalculate ran when changing level (SetLevel -> recalculate())
 			if got := c.Skills.Stealth.Bonus; got != tt.wantBonus {
 				t.Errorf("Stealth Bonus = %d, want %d", got, tt.wantBonus)
 			}

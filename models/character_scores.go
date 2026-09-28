@@ -22,6 +22,15 @@ type CharScores struct {
 	Cha int
 }
 
+type CharModifiers struct {
+	Str int
+	Dex int
+	Con int
+	Int int
+	Wis int
+	Cha int
+}
+
 func (cs *CharScores) AbilityModifier(ability Ability) int {
 	var score int
 
@@ -43,28 +52,4 @@ func (cs *CharScores) AbilityModifier(ability Ability) int {
 	}
 
 	return int(math.Floor(float64(score-10) / 2))
-}
-
-func (cs *CharScores) SetStrength(str int) {
-	cs.Str = str
-}
-
-func (cs *CharScores) SetDexterity(dex int) {
-	cs.Dex = dex
-}
-
-func (cs *CharScores) SetConstitution(con int) {
-	cs.Con = con
-}
-
-func (cs *CharScores) SetIntelligence(intelli int) {
-	cs.Int = intelli
-}
-
-func (cs *CharScores) SetWisdom(wis int) {
-	cs.Wis = wis
-}
-
-func (cs *CharScores) SetCharisma(cha int) {
-	cs.Cha = cha
 }
