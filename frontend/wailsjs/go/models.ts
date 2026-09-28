@@ -50,6 +50,28 @@ export namespace models {
 	        this.DeathFails = source["DeathFails"];
 	    }
 	}
+	export class CharModifiers {
+	    Str: number;
+	    Dex: number;
+	    Con: number;
+	    Int: number;
+	    Wis: number;
+	    Cha: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new CharModifiers(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.Str = source["Str"];
+	        this.Dex = source["Dex"];
+	        this.Con = source["Con"];
+	        this.Int = source["Int"];
+	        this.Wis = source["Wis"];
+	        this.Cha = source["Cha"];
+	    }
+	}
 	export class CharScores {
 	    Str: number;
 	    Dex: number;
@@ -154,6 +176,7 @@ export namespace models {
 	    ID: number;
 	    Base: CharBase;
 	    Scores: CharScores;
+	    ScoreModifiers: CharModifiers;
 	    Health: CharHealth;
 	    Skills: CharSkills;
 	    Inspiration: number;
@@ -168,6 +191,7 @@ export namespace models {
 	        this.ID = source["ID"];
 	        this.Base = this.convertValues(source["Base"], CharBase);
 	        this.Scores = this.convertValues(source["Scores"], CharScores);
+	        this.ScoreModifiers = this.convertValues(source["ScoreModifiers"], CharModifiers);
 	        this.Health = this.convertValues(source["Health"], CharHealth);
 	        this.Skills = this.convertValues(source["Skills"], CharSkills);
 	        this.Inspiration = source["Inspiration"];
