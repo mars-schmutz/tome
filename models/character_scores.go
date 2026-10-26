@@ -2,15 +2,15 @@ package models
 
 import "math"
 
-type Ability int
+type Ability string
 
 const (
-	Str Ability = iota
-	Dex
-	Con
-	Int
-	Wis
-	Cha
+	Str Ability = "Str"
+	Dex Ability = "Dex"
+	Con Ability = "Con"
+	Int Ability = "Int"
+	Wis Ability = "Wis"
+	Cha Ability = "Cha"
 )
 
 type CharScores struct {

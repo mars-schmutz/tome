@@ -19,18 +19,20 @@ type Character struct {
 	ScoreModifiers CharModifiers
 	Health         CharHealth
 	Skills         CharSkills
+	Spellcasting   CharSpellcasting
 	Inspiration    int
 	Proficiency    int
 }
 
 func NewCharacter() Character {
 	char := Character{
-		Base:        CharBase{},
-		Scores:      CharScores{},
-		Health:      CharHealth{},
-		Skills:      CharSkills{},
-		Inspiration: 0,
-		Proficiency: 0,
+		Base:         CharBase{},
+		Scores:       CharScores{},
+		Health:       CharHealth{},
+		Skills:       CharSkills{},
+		Spellcasting: CharSpellcasting{},
+		Inspiration:  0,
+		Proficiency:  0,
 	}
 	char.SetLevel(1)
 	return char
@@ -84,10 +86,37 @@ func (c *Character) recalculateProficiency() {
 	}
 }
 
+func (c *Character) SetSpellcastingAbility(ability Ability) error {
+	// Empty string is for non-spellcasters
+	switch ability {
+	case Str, Dex, Con, Int, Wis, Cha, "":
+		c.Spellcasting.Ability = ability
+		c.recalculate()
+		return nil
+	default:
+		return fmt.Errorf("invalid spellcasting ability: %q", ability)
+	}
+}
+
+func (c *Character) recalculateSpellcasting() {
+	if c.Spellcasting.Ability == "" {
+		c.Spellcasting.AttackBonus = 0
+		c.Spellcasting.SaveDC = 0
+		return
+	}
+	abilityMod := c.Scores.AbilityModifier(c.Spellcasting.Ability)
+	dc := 8 + c.Proficiency + abilityMod
+	attackBonus := c.Proficiency + abilityMod
+
+	c.Spellcasting.SaveDC = dc
+	c.Spellcasting.AttackBonus = attackBonus
+}
+
 func (c *Character) recalculate() {
 	c.recalculateProficiency()
 	c.recalculateModifiers()
 	c.recalculateAllSkills()
+	c.recalculateSpellcasting()
 }
 
 func (c *Character) recalculateAllSkills() {
