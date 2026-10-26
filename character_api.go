@@ -62,6 +62,14 @@ func (api *CharacterApi) SetSkillLevel(skill string, level int) (models.Characte
 	return c, err
 }
 
+func (api *CharacterApi) SetSpellcastingAbility(ability models.Ability) (models.Character, error) {
+	c, err := api.svc.SetSpellcastingAbility(ability)
+	if err != nil {
+		log.Printf("SetSpellcastingAbility(%q): %v", ability, err)
+	}
+	return c, err
+}
+
 func (api *CharacterApi) SetMaxHp(newHp int) models.Character {
 	return api.svc.SetMaxHp(newHp)
 }

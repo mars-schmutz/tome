@@ -80,3 +80,14 @@ func (s *CharacterService) SetSkillLevel(skill string, level int) (models.Charac
 
 	return s.current, nil
 }
+
+func (s *CharacterService) SetSpellcastingAbility(ability models.Ability) (models.Character, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if err := s.current.SetSpellcastingAbility(ability); err != nil {
+		return models.Character{}, fmt.Errorf("set spellcasting ability: %w", err)
+	}
+
+	return s.current, nil
+}
