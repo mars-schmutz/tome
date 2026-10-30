@@ -66,3 +66,21 @@ func (s *CharacterService) SelectCharacter(id int64) (models.Character, error) {
 	s.current = c
 	return s.current, nil
 }
+
+func (s *CharacterService) update(action string, mutate func(c *models.Character) error) (models.Character, error) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	if s.current.ID == 0 {
+		return models.Character{}, fmt.Errorf("%s: %w", action, ErrNoCharacter)
+	}
+	c := s.current
+	if err := mutate(&c); err != nil {
+		return models.Character{}, fmt.Errorf("%s: %w", action, ErrNoCharacter)
+	}
+	if err := s.store.SaveCharacter(c); err != nil {
+		return models.Character{}, fmt.Errorf("%s: %w", action, ErrNoCharacter)
+	}
+	s.current = c
+	return s.current, nil
+}

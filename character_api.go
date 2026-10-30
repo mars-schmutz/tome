@@ -17,40 +17,72 @@ func NewCharacterApi(newSvc *character.CharacterService) *CharacterApi {
 	}
 }
 
-func (api *CharacterApi) SetName(name string) models.Character {
-	return api.svc.SetName(name)
+func (api *CharacterApi) SetName(name string) (models.Character, error) {
+	c, err := api.svc.SetName(name)
+	if err != nil {
+		log.Printf("SetName(%q): %v", name, err)
+	}
+	return c, err
 }
 
 func (api *CharacterApi) GetCharacter() models.Character {
 	return api.svc.GetCharacter()
 }
 
-func (api *CharacterApi) SetClass(class string) models.Character {
-	return api.svc.SetClass(class)
+func (api *CharacterApi) SetClass(class string) (models.Character, error) {
+	c, err := api.svc.SetClass(class)
+	if err != nil {
+		log.Printf("SetClass(%q): %v", class, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetRace(race string) models.Character {
-	return api.svc.SetRace(race)
+func (api *CharacterApi) SetRace(race string) (models.Character, error) {
+	c, err := api.svc.SetRace(race)
+	if err != nil {
+		log.Printf("SetRace(%q): %v", race, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetBackground(background string) models.Character {
-	return api.svc.SetBackground(background)
+func (api *CharacterApi) SetBackground(background string) (models.Character, error) {
+	c, err := api.svc.SetBackground(background)
+	if err != nil {
+		log.Printf("SetBackground(%q): %v", background, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetAlignment(alignment string) models.Character {
-	return api.svc.SetAlignment(alignment)
+func (api *CharacterApi) SetAlignment(alignment string) (models.Character, error) {
+	c, err := api.svc.SetAlignment(alignment)
+	if err != nil {
+		log.Printf("SetAlignment(%q): %v", alignment, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetLevel(level int) models.Character {
-	return api.svc.SetLevel(level)
+func (api *CharacterApi) SetLevel(level int) (models.Character, error) {
+	c, err := api.svc.SetLevel(level)
+	if err != nil {
+		log.Printf("SetLevel(%d): %v", level, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetInspiration(insp int) models.Character {
-	return api.svc.SetInspiration(insp)
+func (api *CharacterApi) SetInspiration(insp int) (models.Character, error) {
+	c, err := api.svc.SetInspiration(insp)
+	if err != nil {
+		log.Printf("SetInspiration(%d): %v", insp, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetScores(scores models.CharScores) models.Character {
-	return api.svc.SetScores(scores)
+func (api *CharacterApi) SetScores(scores models.CharScores) (models.Character, error) {
+	c, err := api.svc.SetScores(scores)
+	if err != nil {
+		log.Printf("SetScores(%q): %v", scores, err)
+	}
+	return c, err
 }
 
 // SetSkillLevel specifically for setting the Skill.Level (0 none, 1 proficient, 2 expertise). Bonuses are calculated by models.Character
