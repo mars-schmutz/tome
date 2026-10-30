@@ -1,7 +1,15 @@
 // Package models provides all the structures for the data
 package models
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type CharacterSummary struct {
+	ID   int64
+	Name string
+}
 
 type CharBase struct {
 	Name       string
@@ -36,6 +44,16 @@ func NewCharacter() Character {
 	}
 	char.SetLevel(1)
 	return char
+}
+
+func DecodeCharacter(data []byte) (Character, error) {
+	var c Character
+	err := json.Unmarshal(data, &c)
+	if err != nil {
+		return Character{}, fmt.Errorf("decode character: %w", err)
+	}
+	c.recalculate()
+	return c, nil
 }
 
 func (cb *CharBase) SetName(name string) {
