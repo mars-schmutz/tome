@@ -25,8 +25,36 @@ func (api *CharacterApi) SetName(name string) (models.Character, error) {
 	return c, err
 }
 
-func (api *CharacterApi) GetCharacter() models.Character {
-	return api.svc.GetCharacter()
+func (api *CharacterApi) GetCharacter() (models.Character, error) {
+	c, err := api.svc.GetCharacter()
+	if err != nil {
+		log.Printf("GetCharacter: %v", err)
+	}
+	return c, err
+}
+
+func (api *CharacterApi) ListCharacters() ([]models.CharacterSummary, error) {
+	c, err := api.svc.ListCharacters()
+	if err != nil {
+		log.Printf("ListCharacters: %v", err)
+	}
+	return c, err
+}
+
+func (api *CharacterApi) CreateCharacter() (models.Character, error) {
+	c, err := api.svc.CreateCharacter()
+	if err != nil {
+		log.Printf("CreateCharacter: %v", err)
+	}
+	return c, err
+}
+
+func (api *CharacterApi) SelectCharacter(id int64) (models.Character, error) {
+	c, err := api.svc.SelectCharacter(id)
+	if err != nil {
+		log.Printf("SelectCharacter(%d): %v", id, err)
+	}
+	return c, err
 }
 
 func (api *CharacterApi) SetClass(class string) (models.Character, error) {

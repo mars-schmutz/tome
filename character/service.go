@@ -20,16 +20,18 @@ type CharacterService struct {
 
 func NewCharacterService(st *store.Store) *CharacterService {
 	return &CharacterService{
-		store:   st,
-		current: models.NewCharacter(),
+		store: st,
 	}
 }
 
-func (s *CharacterService) GetCharacter() models.Character {
+func (s *CharacterService) GetCharacter() (models.Character, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	return s.current
+	if s.current.ID == 0 {
+		return models.Character{}, ErrNoCharacter
+	}
+	return s.current, nil
 }
 
 func (s *CharacterService) ListCharacters() ([]models.CharacterSummary, error) {
