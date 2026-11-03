@@ -80,7 +80,7 @@ func (api *CharacterApi) SetInspiration(insp int) (models.Character, error) {
 func (api *CharacterApi) SetScores(scores models.CharScores) (models.Character, error) {
 	c, err := api.svc.SetScores(scores)
 	if err != nil {
-		log.Printf("SetScores(%q): %v", scores, err)
+		log.Printf("SetScores(%+v): %v", scores, err)
 	}
 	return c, err
 }
@@ -102,38 +102,74 @@ func (api *CharacterApi) SetSpellcastingAbility(ability models.Ability) (models.
 	return c, err
 }
 
-func (api *CharacterApi) SetMaxHp(newHp int) models.Character {
-	return api.svc.SetMaxHp(newHp)
+func (api *CharacterApi) SetMaxHp(newHp int) (models.Character, error) {
+	c, err := api.svc.SetMaxHp(newHp)
+	if err != nil {
+		log.Printf("SetMaxHp(%d): %v", newHp, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) Heal(amount int) models.Character {
-	return api.svc.Heal(amount)
+func (api *CharacterApi) Heal(amount int) (models.Character, error) {
+	c, err := api.svc.Heal(amount)
+	if err != nil {
+		log.Printf("Heal(%d): %v", amount, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) TakeDamage(amount int) models.Character {
-	return api.svc.TakeDamage(amount)
+func (api *CharacterApi) TakeDamage(amount int) (models.Character, error) {
+	c, err := api.svc.TakeDamage(amount)
+	if err != nil {
+		log.Printf("TakeDamage(%d): %v", amount, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetHitDice(dice string) models.Character {
-	return api.svc.SetHitDice(dice)
+func (api *CharacterApi) SetHitDice(dice string) (models.Character, error) {
+	c, err := api.svc.SetHitDice(dice)
+	if err != nil {
+		log.Printf("SetHitDice(%q): %v", dice, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetArmorClass(ac int) models.Character {
-	return api.svc.SetArmorClass(ac)
+func (api *CharacterApi) SetArmorClass(ac int) (models.Character, error) {
+	c, err := api.svc.SetArmorClass(ac)
+	if err != nil {
+		log.Printf("SetArmorClass(%d): %v", ac, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetInitiative(initiative int) models.Character {
-	return api.svc.SetInitiative(initiative)
+func (api *CharacterApi) SetInitiative(initiative int) (models.Character, error) {
+	c, err := api.svc.SetInitiative(initiative)
+	if err != nil {
+		log.Printf("SetInitiative(%d): %v", initiative, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetSpeed(speed int) models.Character {
-	return api.svc.SetSpeed(speed)
+func (api *CharacterApi) SetSpeed(speed int) (models.Character, error) {
+	c, err := api.svc.SetSpeed(speed)
+	if err != nil {
+		log.Printf("SetSpeed(%d): %v", speed, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetDeathSaves(saves int) models.Character {
-	return api.svc.SetDeathSaves(saves)
+func (api *CharacterApi) SetDeathSaves(saves int) (models.Character, error) {
+	c, err := api.svc.SetDeathSaves(saves)
+	if err != nil {
+		log.Printf("SetDeathSaves(%d): %v", saves, err)
+	}
+	return c, err
 }
 
-func (api *CharacterApi) SetDeathFails(fails int) models.Character {
-	return api.svc.SetDeathFails(fails)
+func (api *CharacterApi) SetDeathFails(fails int) (models.Character, error) {
+	c, err := api.svc.SetDeathFails(fails)
+	if err != nil {
+		log.Printf("SetDeathFails(%d): %v", fails, err)
+	}
+	return c, err
 }
