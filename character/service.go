@@ -47,7 +47,7 @@ func (s *CharacterService) CreateCharacter() (models.Character, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	var c models.Character
+	c := models.NewCharacter()
 	id, err := s.store.CreateCharacter(c)
 	if err != nil {
 		return models.Character{}, fmt.Errorf("create character: %w", err)
@@ -78,10 +78,10 @@ func (s *CharacterService) update(action string, mutate func(c *models.Character
 	}
 	c := s.current
 	if err := mutate(&c); err != nil {
-		return models.Character{}, fmt.Errorf("%s: %w", action, ErrNoCharacter)
+		return models.Character{}, fmt.Errorf("%s: %w", action, err)
 	}
 	if err := s.store.SaveCharacter(c); err != nil {
-		return models.Character{}, fmt.Errorf("%s: %w", action, ErrNoCharacter)
+		return models.Character{}, fmt.Errorf("%s: %w", action, err)
 	}
 	s.current = c
 	return s.current, nil
