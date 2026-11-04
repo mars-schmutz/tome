@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Base from "../components/character/Base.vue";
 import { onMounted } from "vue";
 import {
   character,
@@ -7,15 +8,9 @@ import {
   pick,
   loadList,
   createNew,
-  setName,
 } from "../composables/useCharacter";
 
 onMounted(loadList);
-
-const onNameChange = async (e: Event) => {
-  const name = (e.target as HTMLInputElement).value;
-  await setName(name);
-};
 </script>
 
 <template>
@@ -26,11 +21,7 @@ const onNameChange = async (e: Event) => {
     <button @click="createNew">New Character</button>
   </div>
   <div v-if="character">
-    <label>
-      Name
-      <input :value="character.Base.Name" @change="onNameChange" />
-    </label>
-
+    <Base />
     <p>Saved in Go: {{ character.Base.Name || "no name yet" }}</p>
   </div>
   <p v-else>Select or create a character</p>
