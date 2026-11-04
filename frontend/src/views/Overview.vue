@@ -1,66 +1,20 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import {
-  CreateCharacter,
-  ListCharacters,
-  SelectCharacter,
-  SetName,
-} from "../../wailsjs/go/main/CharacterApi";
-import { models } from "../../wailsjs/go/models";
+  character,
+  characters,
+  error,
+  pick,
+  loadList,
+  createNew,
+  setName,
+} from "../composables/useCharacter";
 
-const character = ref<models.Character | null>(null);
-const characters = ref<models.CharacterSummary[]>([]);
-const error = ref<string>("");
+onMounted(loadList);
 
-onMounted(async () => {
-  try {
-    characters.value = await ListCharacters();
-  } catch (err: unknown) {
-    if (typeof err === "string") {
-      error.value = err;
-    } else {
-      console.log("Unexpected error: ", err);
-    }
-  }
-});
-
-const pick = async (id: number) => {
-  try {
-    character.value = await SelectCharacter(id);
-  } catch (err: unknown) {
-    if (typeof err === "string") {
-      error.value = err;
-    } else {
-      console.log("Unexpected error: ", err);
-    }
-  }
-};
-
-const createNew = async () => {
-  try {
-    character.value = await CreateCharacter();
-    characters.value = await ListCharacters();
-  } catch (err: unknown) {
-    if (typeof err === "string") {
-      error.value = err;
-    } else {
-      console.log("Unexpected error: ", err);
-    }
-  }
-};
-
-const saveName = async (e: Event) => {
+const onNameChange = async (e: Event) => {
   const name = (e.target as HTMLInputElement).value;
-  try {
-    character.value = await SetName(name);
-    characters.value = await ListCharacters();
-  } catch (err: unknown) {
-    if (typeof err === "string") {
-      error.value = err;
-    } else {
-      console.log("Unexpected error: ", err);
-    }
-  }
+  await setName(name);
 };
 </script>
 
@@ -74,7 +28,7 @@ const saveName = async (e: Event) => {
   <div v-if="character">
     <label>
       Name
-      <input :value="character.Base.Name" @change="saveName" />
+      <input :value="character.Base.Name" @change="onNameChange" />
     </label>
 
     <p>Saved in Go: {{ character.Base.Name || "no name yet" }}</p>
