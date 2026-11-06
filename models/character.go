@@ -28,6 +28,7 @@ type Character struct {
 	Health         CharHealth
 	Skills         CharSkills
 	Spellcasting   CharSpellcasting
+	Saves          CharSaves
 	Inspiration    int
 	Proficiency    int
 }
@@ -39,6 +40,7 @@ func NewCharacter() Character {
 		Health:       CharHealth{},
 		Skills:       CharSkills{},
 		Spellcasting: CharSpellcasting{},
+		Saves:        CharSaves{},
 		Inspiration:  0,
 		Proficiency:  0,
 	}
@@ -130,11 +132,22 @@ func (c *Character) recalculateSpellcasting() {
 	c.Spellcasting.AttackBonus = attackBonus
 }
 
+func (c *Character) recalculateSaves() {
+	for _, e := range c.Saves.entries() {
+		bonus := c.Scores.AbilityModifier(e.Ability)
+		if e.Save.Proficient {
+			bonus += c.Proficiency
+		}
+		e.Save.Bonus = bonus
+	}
+}
+
 func (c *Character) recalculate() {
 	c.recalculateProficiency()
 	c.recalculateModifiers()
 	c.recalculateAllSkills()
 	c.recalculateSpellcasting()
+	c.recalculateSaves()
 }
 
 func (c *Character) recalculateAllSkills() {
@@ -152,6 +165,13 @@ func (c *Character) recalculateModifiers() {
 	c.ScoreModifiers.Int = c.Scores.AbilityModifier(Int)
 	c.ScoreModifiers.Wis = c.Scores.AbilityModifier(Wis)
 	c.ScoreModifiers.Cha = c.Scores.AbilityModifier(Cha)
+}
+
+func (c *Character) SetSaveProficiency(ability Ability, proficient bool) error {
+	for _, e := range c.Saves.entries() {
+		if e.Ability == ability {
+		}
+	}
 }
 
 func (c *Character) SetSkillLevel(skill string, level int) error {
