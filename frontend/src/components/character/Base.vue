@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { character, error, setName } from "../../composables/useCharacter";
+import { character, setName } from "../../composables/useCharacter";
 
 const onNameChange = async (e: Event) => {
   const name = (e.target as HTMLInputElement).value;
@@ -41,6 +41,8 @@ const onNameChange = async (e: Event) => {
 <style scoped>
 div {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .info {

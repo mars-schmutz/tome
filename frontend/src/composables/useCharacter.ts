@@ -4,6 +4,7 @@ import {
   ListCharacters,
   SelectCharacter,
   SetName,
+  SetScores,
 } from "../../wailsjs/go/main/CharacterApi";
 import { models } from "../../wailsjs/go/models";
 
@@ -22,6 +23,8 @@ const run = async (call: () => Promise<models.Character>): Promise<boolean> => {
   }
 };
 
+const setScores = (scores: models.CharScores) => run(() => SetScores(scores));
+
 export const loadList = async () => {
   try {
     characters.value = await ListCharacters();
@@ -39,4 +42,10 @@ export const createNew = async () => {
   if (await run(() => CreateCharacter())) {
     await loadList();
   }
+};
+
+export const setScore = (ability: keyof models.CharScores, value: number) => {
+  if (character.value === null) return;
+  const newScores = { ...character.value.Scores, [ability]: value };
+  setScores(newScores);
 };

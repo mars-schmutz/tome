@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Base from "../components/character/Base.vue";
+import Scores from "../components/character/Scores.vue";
 import { onMounted } from "vue";
 import {
   character,
@@ -22,7 +23,7 @@ onMounted(loadList);
   </div>
   <div v-if="character">
     <Base />
-    <p>Saved in Go: {{ character.Base.Name || "no name yet" }}</p>
+    <Scores />
   </div>
   <p v-else>Select or create a character</p>
   <p v-if="error">{{ error }}</p>
