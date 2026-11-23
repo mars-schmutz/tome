@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Base from "../components/character/Base.vue";
 import Scores from "../components/character/Scores.vue";
+import Saves from "../components/character/Saves.vue";
 import { onMounted } from "vue";
 import {
   character,
@@ -24,6 +25,7 @@ onMounted(loadList);
   <div v-if="character">
     <Base />
     <Scores />
+    <Saves :saves="character.Saves" />
   </div>
   <p v-else>Select or create a character</p>
   <p v-if="error">{{ error }}</p>
