@@ -1,37 +1,72 @@
 <script setup lang="ts">
-import { character, setName } from "../../composables/useCharacter";
+import { models } from "../../../wailsjs/go/models";
+import {
+  setName,
+  setClass,
+  setLevel,
+  setBackground,
+  setAlignment,
+  setRace,
+} from "../../composables/useCharacter";
+
+const { base } = defineProps<{ base: models.CharBase }>();
 
 const onNameChange = async (e: Event) => {
   const name = (e.target as HTMLInputElement).value;
   await setName(name);
 };
+
+const onClassChange = async (e: Event) => {
+  const clss = (e.target as HTMLInputElement).value;
+  await setClass(clss);
+};
+
+const onLevelChange = async (e: Event) => {
+  const level = (e.target as HTMLInputElement).valueAsNumber;
+  await setLevel(level);
+};
+
+const onBackgroundChange = async (e: Event) => {
+  const bg = (e.target as HTMLInputElement).value;
+  await setBackground(bg);
+};
+
+const onRaceChange = async (e: Event) => {
+  const race = (e.target as HTMLInputElement).value;
+  await setRace(race);
+};
+
+const onAlignmentChange = async (e: Event) => {
+  const alignment = (e.target as HTMLInputElement).value;
+  await setAlignment(alignment);
+};
 </script>
 
 <template>
-  <div v-if="character">
+  <div>
     <label class="field">
-      <input :value="character.Base.Name" @change="onNameChange" />
+      <input :value="base.Name" @change="onNameChange" />
       <span>Name</span>
     </label>
     <div class="info">
       <label class="field">
-        <input :value="character.Base.Class" />
+        <input :value="base.Class" @change="onClassChange" />
         <span>Class</span>
       </label>
       <label class="field">
-        <input :value="character.Base.Level" />
+        <input type="number" :value="base.Level" @change="onLevelChange" />
         <span>Level</span>
       </label>
       <label class="field">
-        <input :value="character.Base.Background" />
+        <input :value="base.Background" @change="onBackgroundChange" />
         <span>Background</span>
       </label>
       <label class="field">
-        <input :value="character.Base.Race" />
+        <input :value="base.Race" @change="onRaceChange" />
         <span>Race</span>
       </label>
       <label class="field">
-        <input :value="character.Base.Alignment" />
+        <input :value="base.Alignment" @change="onAlignmentChange" />
         <span>Alignment</span>
       </label>
     </div>

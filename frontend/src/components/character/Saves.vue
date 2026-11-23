@@ -14,12 +14,9 @@ const onProficiencyChange = (ability: Ability, e: Event) => {
 
 <template>
   <div class="saves">
+    <h3>Saves</h3>
     <label v-for="ability in abilities" :key="ability" class="save">
-      <input
-        type="checkbox"
-        :checked="saves[ability].Proficient"
-        @change="onProficiencyChange(ability, $event)"
-      />
+      <input type="checkbox" :checked="saves[ability].Proficient" @change="onProficiencyChange(ability, $event)" />
       <span class="bonus">{{ signed(saves[ability].Bonus) }}</span>
       <span>{{ ability }}</span>
     </label>

@@ -152,7 +152,7 @@ func (c *Character) recalculate() {
 
 func (c *Character) recalculateAllSkills() {
 	for _, e := range c.Skills.entries() {
-		skillBonus := e.Skill.Level * c.Proficiency
+		skillBonus := e.Skill.Tier * c.Proficiency
 		modifier := c.Scores.AbilityModifier(e.Ability)
 		e.Skill.Bonus = skillBonus + modifier
 	}
@@ -179,14 +179,14 @@ func (c *Character) SetSaveProficiency(ability Ability, proficient bool) error {
 	return fmt.Errorf("unknown ability %q", ability)
 }
 
-func (c *Character) SetSkillLevel(skill string, level int) error {
-	if level > 2 || level < 0 {
-		return fmt.Errorf("invalid level value %d", level)
+func (c *Character) SetSkillTier(skill string, tier int) error {
+	if tier > 2 || tier < 0 {
+		return fmt.Errorf("invalid tier value %d", tier)
 	}
 
 	for _, e := range c.Skills.entries() {
 		if e.Name == skill {
-			e.Skill.Level = level
+			e.Skill.Tier = tier
 			c.recalculate()
 			return nil
 		}

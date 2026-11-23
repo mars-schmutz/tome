@@ -4,6 +4,11 @@ import {
   ListCharacters,
   SelectCharacter,
   SetName,
+  SetClass,
+  SetRace,
+  SetBackground,
+  SetAlignment,
+  SetLevel,
   SetScores,
   SetSaveProficiency,
 } from "../../wailsjs/go/main/CharacterApi";
@@ -34,11 +39,20 @@ export const loadList = async () => {
     error.value = String(err);
   }
 };
+
+// Base
 export const setName = async (name: string) => {
   if (await run(() => SetName(name))) {
     await loadList();
   }
 };
+export const setClass = (clss: string) => run(() => SetClass(clss));
+export const setRace = (race: string) => run(() => SetRace(race));
+export const setBackground = (bg: string) => run(() => SetBackground(bg));
+export const setAlignment = (alignment: string) =>
+  run(() => SetAlignment(alignment));
+export const setLevel = (level: number) => run(() => SetLevel(level));
+
 export const pick = (id: number) => run(() => SelectCharacter(id));
 export const createNew = async () => {
   if (await run(() => CreateCharacter())) {
@@ -52,7 +66,5 @@ export const setScore = (ability: Ability, value: number) => {
   setScores(newScores);
 };
 
-export const setSaveProficiency = (
-  ability: Ability,
-  prof: boolean,
-) => run(() => SetSaveProficiency(ability, prof));
+export const setSaveProficiency = (ability: Ability, prof: boolean) =>
+  run(() => SetSaveProficiency(ability, prof));

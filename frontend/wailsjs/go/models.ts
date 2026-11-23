@@ -150,7 +150,7 @@ export namespace models {
 	}
 	export class Skill {
 	    Bonus: number;
-	    Level: number;
+	    Tier: number;
 	
 	    static createFrom(source: any = {}) {
 	        return new Skill(source);
@@ -159,7 +159,7 @@ export namespace models {
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.Bonus = source["Bonus"];
-	        this.Level = source["Level"];
+	        this.Tier = source["Tier"];
 	    }
 	}
 	export class CharSkills {

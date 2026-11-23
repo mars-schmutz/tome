@@ -5,13 +5,13 @@ import (
 	"testing"
 )
 
-func TestSetSkillLevel(t *testing.T) {
+func TestSetSkillTier(t *testing.T) {
 	tests := []struct {
 		name      string
 		skill     string
-		level     int
+		tier      int
 		wantErr   bool
-		wantLevel int
+		wantTier  int
 		wantBonus int
 	}{
 		{"set expertise", "Stealth", 2, false, 2, 6},
@@ -19,22 +19,22 @@ func TestSetSkillLevel(t *testing.T) {
 		{"unknown skill", "Stelth", 1, true, 0, 0},
 		{"empty skill name", "", 1, true, 0, 0},
 		{"names are case sensitive", "stealth", 1, true, 0, 0},
-		{"level too high", "Stealth", 3, true, 0, 0},
-		{"level negative", "Stealth", -1, true, 0, 0},
+		{"tier too high", "Stealth", 3, true, 0, 0},
+		{"tier negative", "Stealth", -1, true, 0, 0},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			// Start every case from the same known state: proficient Stealth, bonus 4.
 			c := Character{Scores: CharScores{Dex: 14}, Proficiency: 2}
-			c.Skills.Stealth.Level = 1
+			c.Skills.Stealth.Tier = 1
 			c.recalculateAllSkills()
 			before := c.Skills
 
-			err := c.SetSkillLevel(tt.skill, tt.level)
+			err := c.SetSkillTier(tt.skill, tt.tier)
 
 			if (err != nil) != tt.wantErr {
-				t.Fatalf("SetSkillLevel(%q, %d) error = %v, wantErr %v", tt.skill, tt.level, err, tt.wantErr)
+				t.Fatalf("SetSkillTier(%q, %d) error = %v, wantErr %v", tt.skill, tt.tier, err, tt.wantErr)
 			}
 
 			if tt.wantErr {
@@ -44,8 +44,8 @@ func TestSetSkillLevel(t *testing.T) {
 				return
 			}
 
-			if got := c.Skills.Stealth.Level; got != tt.wantLevel {
-				t.Errorf("Stealth Level = %d, want %d", got, tt.wantLevel)
+			if got := c.Skills.Stealth.Tier; got != tt.wantTier {
+				t.Errorf("Stealth Tier = %d, want %d", got, tt.wantTier)
 			}
 			if got := c.Skills.Stealth.Bonus; got != tt.wantBonus {
 				t.Errorf("Stealth Bonus = %d, want %d", got, tt.wantBonus)
@@ -75,7 +75,7 @@ func TestSetLevel(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(fmt.Sprintf("level %d", tt.level), func(t *testing.T) {
 			c := Character{Scores: CharScores{Dex: 14}}
-			c.Skills.Stealth.Level = 1
+			c.Skills.Stealth.Tier = 1
 
 			c.SetLevel(tt.level)
 
@@ -98,24 +98,22 @@ func TestSetScores(t *testing.T) {
 		name   string
 		scores CharScores
 		skill  string
-		level  int
+		tier   int
 		want   int
 	}{
 		{"raising Dex updates a proficient Dex skill", CharScores{Str: 10, Dex: 16, Con: 10, Int: 10, Wis: 10, Cha: 10}, "Acrobatics", 1, 5},
 		{"lowering Wis updates an unproficient Wis skill", CharScores{Str: 10, Dex: 10, Con: 10, Int: 10, Wis: 7, Cha: 10}, "Perception", 0, -2},
 		{"expertise with a high Int", CharScores{Str: 10, Dex: 10, Con: 10, Int: 20, Wis: 10, Cha: 10}, "Arcana", 2, 9},
-		// Documents the accepted risk in the architecture notes: a partial
-		// scores object zeroes the missing fields, and bonuses drop silently.
 		{"missing fields become 0", CharScores{Dex: 16}, "Athletics", 0, -5},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Start from a flat 10 in everything, proficiency 2, so only the new scores matter.
+			// Start from a flat 10 in everything, proficiency 2, so only new scores matter
 			c := Character{Proficiency: 2}
 			c.SetScores(CharScores{Str: 10, Dex: 10, Con: 10, Int: 10, Wis: 10, Cha: 10})
-			if err := c.SetSkillLevel(tt.skill, tt.level); err != nil {
-				t.Fatalf("setup: SetSkillLevel(%q, %d): %v", tt.skill, tt.level, err)
+			if err := c.SetSkillTier(tt.skill, tt.tier); err != nil {
+				t.Fatalf("setup: SetSkillTier(%q, %d): %v", tt.skill, tt.tier, err)
 			}
 
 			c.SetScores(tt.scores)

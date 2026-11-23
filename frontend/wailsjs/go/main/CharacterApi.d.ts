@@ -42,7 +42,7 @@ export function SetSaveProficiency(arg1:string,arg2:boolean):Promise<models.Char
 
 export function SetScores(arg1:models.CharScores):Promise<models.Character>;
 
-export function SetSkillLevel(arg1:string,arg2:number):Promise<models.Character>;
+export function SetSkillTier(arg1:string,arg2:number):Promise<models.Character>;
 
 export function SetSpeed(arg1:number):Promise<models.Character>;
 

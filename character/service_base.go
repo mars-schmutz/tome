@@ -60,9 +60,9 @@ func (s *CharacterService) SetScores(scores models.CharScores) (models.Character
 	})
 }
 
-func (s *CharacterService) SetSkillLevel(skill string, level int) (models.Character, error) {
-	return s.update("set skill level", func(c *models.Character) error {
-		return c.SetSkillLevel(skill, level)
+func (s *CharacterService) SetSkillTier(skill string, tier int) (models.Character, error) {
+	return s.update("set skill tier", func(c *models.Character) error {
+		return c.SetSkillTier(skill, tier)
 	})
 }
 

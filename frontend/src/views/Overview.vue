@@ -23,7 +23,7 @@ onMounted(loadList);
     <button @click="createNew">New Character</button>
   </div>
   <div v-if="character">
-    <Base />
+    <Base :base="character.Base" />
     <Scores />
     <Saves :saves="character.Saves" />
   </div>

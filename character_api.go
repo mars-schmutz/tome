@@ -113,11 +113,11 @@ func (api *CharacterApi) SetScores(scores models.CharScores) (models.Character, 
 	return c, err
 }
 
-// SetSkillLevel specifically for setting the Skill.Level (0 none, 1 proficient, 2 expertise). Bonuses are calculated by models.Character
-func (api *CharacterApi) SetSkillLevel(skill string, level int) (models.Character, error) {
-	c, err := api.svc.SetSkillLevel(skill, level)
+// SetSkillTier specifically for setting the Skill.Tier (0 none, 1 proficient, 2 expertise)
+func (api *CharacterApi) SetSkillTier(skill string, tier int) (models.Character, error) {
+	c, err := api.svc.SetSkillTier(skill, tier)
 	if err != nil {
-		log.Printf("SetSkillLevel(%q, %d): %v", skill, level, err)
+		log.Printf("SetSkillTier(%q, %d): %v", skill, tier, err)
 	}
 	return c, err
 }

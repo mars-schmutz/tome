@@ -1,9 +1,9 @@
 package models
 
-// Skill Level 0 = none, 1 = proficient, 2 = expertise
+// Skill Tier 0 = none, 1 = proficient, 2 = expertise
 type Skill struct {
 	Bonus int
-	Level int
+	Tier  int
 }
 
 type skillEntry struct {

@@ -28,7 +28,7 @@ func TestRecalculateAllSkills(t *testing.T) {
 		scores      CharScores
 		proficiency int
 		skill       string
-		level       int
+		tier        int
 		want        int
 	}{
 		{"proficient", CharScores{Dex: 14}, 2, "Acrobatics", 1, 4},
@@ -41,7 +41,7 @@ func TestRecalculateAllSkills(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c := Character{Scores: tt.scores, Proficiency: tt.proficiency}
-			findSkill(t, &c.Skills, tt.skill).Level = tt.level
+			findSkill(t, &c.Skills, tt.skill).Tier = tt.tier
 
 			c.recalculateAllSkills()
 

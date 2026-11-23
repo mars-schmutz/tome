@@ -82,8 +82,8 @@ export function SetScores(arg1) {
   return window['go']['main']['CharacterApi']['SetScores'](arg1);
 }
 
-export function SetSkillLevel(arg1, arg2) {
-  return window['go']['main']['CharacterApi']['SetSkillLevel'](arg1, arg2);
+export function SetSkillTier(arg1, arg2) {
+  return window['go']['main']['CharacterApi']['SetSkillTier'](arg1, arg2);
 }
 
 export function SetSpeed(arg1) {
