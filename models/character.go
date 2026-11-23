@@ -170,8 +170,13 @@ func (c *Character) recalculateModifiers() {
 func (c *Character) SetSaveProficiency(ability Ability, proficient bool) error {
 	for _, e := range c.Saves.entries() {
 		if e.Ability == ability {
+			e.Save.Proficient = proficient
+			c.recalculate()
+			return nil
 		}
 	}
+
+	return fmt.Errorf("unknown ability %q", ability)
 }
 
 func (c *Character) SetSkillLevel(skill string, level int) error {

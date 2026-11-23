@@ -66,6 +66,12 @@ func (s *CharacterService) SetSkillLevel(skill string, level int) (models.Charac
 	})
 }
 
+func (s *CharacterService) SetSaveProficiency(ability models.Ability, proficient bool) (models.Character, error) {
+	return s.update("set save proficiency", func(c *models.Character) error {
+		return c.SetSaveProficiency(ability, proficient)
+	})
+}
+
 func (s *CharacterService) SetSpellcastingAbility(ability models.Ability) (models.Character, error) {
 	return s.update("set spellcasting ability", func(c *models.Character) error {
 		return c.SetSpellcastingAbility(ability)
