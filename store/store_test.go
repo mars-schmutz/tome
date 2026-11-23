@@ -27,8 +27,8 @@ func newTestCharacter(t *testing.T, name string) models.Character {
 	if err := c.SetSpellcastingAbility(models.Wis); err != nil {
 		t.Fatalf("setup: SetSpellcastingAbility: %v", err)
 	}
-	if err := c.SetSkillLevel("Stealth", 1); err != nil {
-		t.Fatalf("setup: SetSkillLevel: %v", err)
+	if err := c.SetSkillTier("Stealth", 1); err != nil {
+		t.Fatalf("setup: SetSkillTier: %v", err)
 	}
 	return c
 }

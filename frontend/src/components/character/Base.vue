@@ -11,46 +11,29 @@ import {
 
 const { base } = defineProps<{ base: models.CharBase }>();
 
-const onNameChange = async (e: Event) => {
-  const name = (e.target as HTMLInputElement).value;
-  await setName(name);
-};
-
-const onClassChange = async (e: Event) => {
-  const clss = (e.target as HTMLInputElement).value;
-  await setClass(clss);
+const onTextChange = async (
+  setter: (value: string) => Promise<unknown>,
+  e: Event,
+) => {
+  const value = (e.target as HTMLInputElement).value;
+  setter(value);
 };
 
 const onLevelChange = async (e: Event) => {
   const level = (e.target as HTMLInputElement).valueAsNumber;
   await setLevel(level);
 };
-
-const onBackgroundChange = async (e: Event) => {
-  const bg = (e.target as HTMLInputElement).value;
-  await setBackground(bg);
-};
-
-const onRaceChange = async (e: Event) => {
-  const race = (e.target as HTMLInputElement).value;
-  await setRace(race);
-};
-
-const onAlignmentChange = async (e: Event) => {
-  const alignment = (e.target as HTMLInputElement).value;
-  await setAlignment(alignment);
-};
 </script>
 
 <template>
   <div>
     <label class="field">
-      <input :value="base.Name" @change="onNameChange" />
+      <input :value="base.Name" @change="onTextChange(setName, $event)" />
       <span>Name</span>
     </label>
     <div class="info">
       <label class="field">
-        <input :value="base.Class" @change="onClassChange" />
+        <input :value="base.Class" @change="onTextChange(setClass, $event)" />
         <span>Class</span>
       </label>
       <label class="field">
@@ -58,15 +41,15 @@ const onAlignmentChange = async (e: Event) => {
         <span>Level</span>
       </label>
       <label class="field">
-        <input :value="base.Background" @change="onBackgroundChange" />
+        <input :value="base.Background" @change="onTextChange(setBackground, $event)" />
         <span>Background</span>
       </label>
       <label class="field">
-        <input :value="base.Race" @change="onRaceChange" />
+        <input :value="base.Race" @change="onTextChange(setRace, $event)" />
         <span>Race</span>
       </label>
       <label class="field">
-        <input :value="base.Alignment" @change="onAlignmentChange" />
+        <input :value="base.Alignment" @change="onTextChange(setAlignment, $event)" />
         <span>Alignment</span>
       </label>
     </div>
