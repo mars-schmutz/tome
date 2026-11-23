@@ -1,17 +1,8 @@
 <script setup lang="ts">
 import ScoreBox from "./ScoreBox.vue";
 import { signed } from "../../utils/format";
-import { models } from "../../../wailsjs/go/models";
+import { abilities } from "../../utils/character";
 import { character, setScore } from "../../composables/useCharacter";
-
-const abilities: (keyof models.CharScores)[] = [
-  "Str",
-  "Dex",
-  "Con",
-  "Int",
-  "Wis",
-  "Cha",
-];
 </script>
 
 <template>

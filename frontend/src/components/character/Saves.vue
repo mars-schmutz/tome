@@ -1,20 +1,12 @@
 <script setup lang="ts">
 import { models } from "../../../wailsjs/go/models";
 import { signed } from "../../utils/format";
+import { abilities, type Ability } from "../../utils/character";
 import { setSaveProficiency } from "../../composables/useCharacter";
 
 const { saves } = defineProps<{ saves: models.CharSaves }>();
 
-const abilities: (keyof models.CharScores)[] = [
-  "Str",
-  "Dex",
-  "Con",
-  "Int",
-  "Wis",
-  "Cha",
-];
-
-const onProficiencyChange = (ability: keyof models.CharScores, e: Event) => {
+const onProficiencyChange = (ability: Ability, e: Event) => {
   const proficient = (e.target as HTMLInputElement).checked;
   setSaveProficiency(ability, proficient);
 };

@@ -8,6 +8,7 @@ import {
   SetSaveProficiency,
 } from "../../wailsjs/go/main/CharacterApi";
 import { models } from "../../wailsjs/go/models";
+import type { Ability } from "../utils/character";
 
 export const character = ref<models.Character | null>(null);
 export const characters = ref<models.CharacterSummary[]>([]);
@@ -45,13 +46,13 @@ export const createNew = async () => {
   }
 };
 
-export const setScore = (ability: keyof models.CharScores, value: number) => {
+export const setScore = (ability: Ability, value: number) => {
   if (character.value === null) return;
   const newScores = { ...character.value.Scores, [ability]: value };
   setScores(newScores);
 };
 
 export const setSaveProficiency = (
-  ability: keyof models.CharScores,
+  ability: Ability,
   prof: boolean,
 ) => run(() => SetSaveProficiency(ability, prof));
