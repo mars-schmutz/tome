@@ -5,6 +5,7 @@ import {
   SelectCharacter,
   SetName,
   SetScores,
+  SetSaveProficiency,
 } from "../../wailsjs/go/main/CharacterApi";
 import { models } from "../../wailsjs/go/models";
 
@@ -49,3 +50,8 @@ export const setScore = (ability: keyof models.CharScores, value: number) => {
   const newScores = { ...character.value.Scores, [ability]: value };
   setScores(newScores);
 };
+
+export const setSaveProficiency = (
+  ability: keyof models.CharScores,
+  prof: boolean,
+) => run(() => SetSaveProficiency(ability, prof));

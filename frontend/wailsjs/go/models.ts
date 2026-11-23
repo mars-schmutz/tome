@@ -72,6 +72,60 @@ export namespace models {
 	        this.Cha = source["Cha"];
 	    }
 	}
+	export class Save {
+	    Proficient: boolean;
+	    Bonus: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new Save(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.Proficient = source["Proficient"];
+	        this.Bonus = source["Bonus"];
+	    }
+	}
+	export class CharSaves {
+	    Str: Save;
+	    Dex: Save;
+	    Con: Save;
+	    Int: Save;
+	    Wis: Save;
+	    Cha: Save;
+	
+	    static createFrom(source: any = {}) {
+	        return new CharSaves(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.Str = this.convertValues(source["Str"], Save);
+	        this.Dex = this.convertValues(source["Dex"], Save);
+	        this.Con = this.convertValues(source["Con"], Save);
+	        this.Int = this.convertValues(source["Int"], Save);
+	        this.Wis = this.convertValues(source["Wis"], Save);
+	        this.Cha = this.convertValues(source["Cha"], Save);
+	    }
+	
+		convertValues(a: any, classs: any, asMap: boolean = false): any {
+		    if (!a) {
+		        return a;
+		    }
+		    if (a.slice && a.map) {
+		        return (a as any[]).map(elem => this.convertValues(elem, classs));
+		    } else if ("object" === typeof a) {
+		        if (asMap) {
+		            for (const key of Object.keys(a)) {
+		                a[key] = new classs(a[key]);
+		            }
+		            return a;
+		        }
+		        return new classs(a);
+		    }
+		    return a;
+		}
+	}
 	export class CharScores {
 	    Str: number;
 	    Dex: number;
@@ -172,6 +226,22 @@ export namespace models {
 		    return a;
 		}
 	}
+	export class CharSpellcasting {
+	    SaveDC: number;
+	    AttackBonus: number;
+	    Ability: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new CharSpellcasting(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.SaveDC = source["SaveDC"];
+	        this.AttackBonus = source["AttackBonus"];
+	        this.Ability = source["Ability"];
+	    }
+	}
 	export class Character {
 	    ID: number;
 	    Base: CharBase;
@@ -179,6 +249,8 @@ export namespace models {
 	    ScoreModifiers: CharModifiers;
 	    Health: CharHealth;
 	    Skills: CharSkills;
+	    Spellcasting: CharSpellcasting;
+	    Saves: CharSaves;
 	    Inspiration: number;
 	    Proficiency: number;
 	
@@ -194,6 +266,8 @@ export namespace models {
 	        this.ScoreModifiers = this.convertValues(source["ScoreModifiers"], CharModifiers);
 	        this.Health = this.convertValues(source["Health"], CharHealth);
 	        this.Skills = this.convertValues(source["Skills"], CharSkills);
+	        this.Spellcasting = this.convertValues(source["Spellcasting"], CharSpellcasting);
+	        this.Saves = this.convertValues(source["Saves"], CharSaves);
 	        this.Inspiration = source["Inspiration"];
 	        this.Proficiency = source["Proficiency"];
 	    }
@@ -216,6 +290,21 @@ export namespace models {
 		    return a;
 		}
 	}
+	export class CharacterSummary {
+	    ID: number;
+	    Name: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new CharacterSummary(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.ID = source["ID"];
+	        this.Name = source["Name"];
+	    }
+	}
+	
 
 }
 

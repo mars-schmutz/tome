@@ -122,8 +122,16 @@ func (api *CharacterApi) SetSkillLevel(skill string, level int) (models.Characte
 	return c, err
 }
 
-func (api *CharacterApi) SetSpellcastingAbility(ability models.Ability) (models.Character, error) {
-	c, err := api.svc.SetSpellcastingAbility(ability)
+func (api *CharacterApi) SetSaveProficiency(ability string, proficient bool) (models.Character, error) {
+	c, err := api.svc.SetSaveProficiency(models.Ability(ability), proficient)
+	if err != nil {
+		log.Printf("SetSaveProficiency(%q, %t): %v", ability, proficient, err)
+	}
+	return c, err
+}
+
+func (api *CharacterApi) SetSpellcastingAbility(ability string) (models.Character, error) {
+	c, err := api.svc.SetSpellcastingAbility(models.Ability(ability))
 	if err != nil {
 		log.Printf("SetSpellcastingAbility(%q): %v", ability, err)
 	}
